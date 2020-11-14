@@ -55,9 +55,22 @@ fn main() {
 	let initialized_arr = [3; 5]; // == [3, 3, 3, 3, 3]
 	println!("First element of the initialized_arr = {}", initialized_arr[0]);
 	
-	another_function();
+	another_function(100);
 }
 
-fn another_function() {
-	println!("Hello");
+// function bodies contain statements and expressions
+// rust is expression based language
+// statement do not return value
+// function definition is statement
+fn another_function(x : i32) {
+	let y = 6; // This is statement. 6 is expression
+	// let x = (let y = 10);  this is error because let is statement.
+	// In C or C++, x = y = 10 will be both lead to the value 6.
+	let x = 3 + 5; //3 + 5 is expression
+	// calling a function and macro is expression
+	let y = {
+		let x = 3;
+		x + 10
+	};
+	println!("y is {}", y);
 }
