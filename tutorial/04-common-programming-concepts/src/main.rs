@@ -73,4 +73,68 @@ fn another_function(x : i32) {
 		x + 10
 	};
 	println!("y is {}", y);
+
+	let test = test_function();
+	println!("test value is {}", test);
+
+	let test = test_function2();
+	println!("test value is {}", test);
+	// Control flow
+	let number = 6;
+
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+	}
+	// Using too mach else if can clutter the code. 
+	// match keyword will be good at here.
+
+	let condition = true;
+	// if block and else block must have same variable type.
+	let number = if condition { 5 } else { 6 };
+	println!("number is {}", number);
+
+	// Loops.
+	let mut counter = 0;
+	let result = loop {
+		counter += 1;
+		if counter == 10 {
+			break counter * 20;
+		}
+	};
+	println!("Loop result is {}", result);
+
+	let mut number = 3;
+	while number != 0 {
+		println!("number in while is {}", number);
+		number -= 1;
+	}
+
+	let array = [ 1, 2, 3, 4, 5 ];
+	let mut index = 0;
+	while index < 5 {
+		println!("The value of the array is {}", array[index]);
+		index += 1;
+	}
+
+	for element in array.iter() {
+		println!("The value of the array is {}", element);
+	}
+
+	for number in (1..4).rev() {
+		println!("number is {}", number);
+	}
+}
+
+fn test_function() -> i32 {
+	100
+}
+
+fn test_function2() -> i32 {
+	return 1010;
 }
