@@ -84,6 +84,34 @@ fn main() {
 
     let r3 = &mut s; // no problem
     println!("{}", r3);
+
+    // String slice
+    // string slice is pointing to original string object.
+    let mut s = String::from("hello world"); 
+    let hello = &s[0..5]; // equivalent with &s[..5]
+    let world = &s[6..11]; // equivalent with &s[6..]
+    let entire = &s[0..s.len()]; // equivalent with &s[..];
+
+    let word = first_word(&s);
+
+    //s.clear(); error occurred here.
+    // immutable borrow occurs in first_word(&s);
+    // cannot do mutable borrow.
+
+    // in borrowing rules, if we have an immutable reference, we cannot also take a mutable reference.
+    // because clear needs to truncate string, it need mutable reference. -> compile fails.
+
+    let s = "Hello, world"; // string literals are string slice (str)
+
+    let my_string = String::from("Hello world");
+    let word = first_word_str(&my_string[..]);
+    let my_string_literal = "Hello world";
+    let word = first_word_str(&my_string_literal[..]);
+    let word = first_word_str(my_string_literal); // string literal is already string slice.
+
+    // other slices.
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[2..4]; // type of the slice is &[i32];
 }
 
 fn takes_ownership(some_string: String) {
@@ -115,4 +143,24 @@ fn calculate_length(s: &String) -> usize {
 
 fn change(some_string: &mut String) {
     some_string.push_str("world");
+}
+// string slice is written as str
+fn first_word(s: &String) -> &str { 
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
+}
+
+fn first_word_str(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
 }
