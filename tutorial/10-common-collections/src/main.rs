@@ -172,4 +172,84 @@ fn main() {
     }
 
     //Getting grapheme clusters from strings is complex, so this functionality is not provided by the standard library.
+
+    use std::collections::HashMap;
+
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Red"), 80);
+    scores.insert(String::from("Blue"), 100);
+
+    let teams = vec![String::from("Red"), String::from("Blue")];
+    let scores = vec![80, 100];
+
+    let mut team_scores : HashMap<_, _> = teams.into_iter().zip(scores.into_iter()).collect();
+
+    let field_name = String::from("favorite color");
+    let field_value = String::from("Blue");
+
+    let mut map = HashMap::new();
+    map.insert(field_name, field_value);
+    // Now field_name and field_value variables are no more valid. ownership moved.
+
+    let name = String::from("favorite color");
+    let value = map.get(&name);
+    match value {
+        Some(val) => println!("Some({})", val),
+        None => println!("None!")
+    };
+    
+    for (key, value) in &team_scores {
+        println!("{} : {}", key, value);
+    }
+
+    let mut scores = HashMap::new();
+
+    // Overwriting a value in the HashMap
+    scores.insert(String::from("Blue"), 10);
+    println!("{:?}", scores);
+    scores.insert(String::from("Blue"), 25);
+    println!("{:?}", scores);
+
+    // Only inserting a value if the key has no value
+    scores.entry(String::from("Blue")).or_insert(100);
+    scores.entry(String::from("Red")).or_insert(50);
+    println!("{:?}", scores);
+
+    let text = "Hello world wonderful world";
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        // or_insert method on entry return **mutable reference**
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:?}", map);
+
+    // Given a list of integers
+    let mut intList = [1, 10, 8, 19, -38, 2, 3];
+
+    // Query average value
+    let mut total : f32 = 0.0;
+    for val in intList.iter() {
+        total += *val as f32;
+    }
+
+    total /= intList.len() as f32;
+    println!("average of list is {}", total);
+
+    // Sort the list
+    intList.sort();
+
+    let mid_index = (intList.len() as f32 / 2.0) as usize;
+    let medial_val = intList.get(mid_index);
+    match medial_val {
+        Some(val) => println!("Median value is {}", val),
+        None => (),
+    };
+
+    let mut intCount = HashMap::new();
+    for value in intList.iter() {
+        let count = intCount.entry(value).or_insert(0);
+        *count += 1;
+    }
 }
